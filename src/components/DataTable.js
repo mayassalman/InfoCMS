@@ -34,7 +34,9 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 
-import CustomizedInputBase from "./CustomizedInputBase";
+import Search from "./Search";
+import { useTranslation } from "react-i18next";
+
 //Helper Functions
 
 function desc(a, b, orderBy) {
@@ -63,14 +65,15 @@ function getSorting(order, orderBy) {
     : (a, b) => -desc(a, b, orderBy);
 }
 
-const defaultLabelDisplayedRows = function defaultLabelDisplayedRows(_ref) {
+const defaultLabelDisplayedRows =(fromText)=> function defaultLabelDisplayedRows(_ref) {
   var from = _ref.from,
     to = _ref.to,
     count = _ref.count;
-  return ""
-    .concat(from, " ... ")
-    .concat(to === -1 ? count : to, " من ")
-    .concat(count);
+  // return ""
+  //   .concat(from, " ... ")
+  //   .concat(to === -1 ? count : to, fromText)
+  //   .concat(count);
+  return `${from}...${to === -1 ? count : to}  ${fromText}   ${count}`
 };
 const handleDelete = () => {
   console.info("You clicked the delete icon.");
@@ -131,7 +134,7 @@ function EnhancedTableHead(props) {
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const { numSelected ,selectedRecordsNumberText,headerData} = props;
+  const { numSelected ,headerData,t} = props;
 
   return (
     <>
@@ -146,7 +149,7 @@ const EnhancedTableToolbar = props => {
             color="inherit"
             variant="subtitle1"
           >
-             {selectedRecordsNumberText} : {numSelected}
+             {t("DATATABLE.SELECTEDRECORDS_NUMBER_LABEL")} : {numSelected}
           </Typography>
         ) : (
           <Typography className={classes.title} variant="h6" id="tableTitle">
@@ -169,7 +172,8 @@ const EnhancedTableToolbar = props => {
               </IconButton>
             </Tooltip>
             <Tooltip title="Search ">
-              <CustomizedInputBase />
+              
+              <Search />
             </Tooltip>
           </>
         )}
@@ -351,6 +355,8 @@ const useToolbarStyles = makeStyles(theme => ({
 }));
 
 export default function EnhancedTable(props) {
+  const { t, i18n } = useTranslation();
+  
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("city");
@@ -431,12 +437,16 @@ export default function EnhancedTable(props) {
 
   return (
     <div className={classes.root}>
+     
       <Paper className={classes.paper}>
+      
         <EnhancedTableToolbar 
-        selectedRecordsNumberText={headerData.selectedRecordsNumberText} 
+        t={t}
         numSelected={selected.length} 
         headerData={headerData}
         />
+        
+     
         <TableContainer className={classes.container}>
           <TablePagination
             ActionsComponent={TablePaginationActions}
@@ -445,12 +455,12 @@ export default function EnhancedTable(props) {
             count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
-            labelRowsPerPage={pagenationData.labelRowsPerPage}
-            nextIconButtonText={pagenationData.nextIconButtonText}
-            backIconButtonText={pagenationData.backIconButtonText}
-            labelDisplayedRows={defaultLabelDisplayedRows}
+            labelRowsPerPage={t('DATATABLE.LABEL_ROWS_PER_PAGE')}
+            nextIconButtonText={t('DATATABLE.NEXTICON_BUTTON_TEXT')}
+            backIconButtonText={t('DATATABLE.BABKICON_BUTTON_TEXT')}
+            labelDisplayedRows={defaultLabelDisplayedRows(t('DATATABLE.FROM_TEXT'))}
             SelectProps={{
-              inputProps: { "aria-label": pagenationData.labelRowsPerPage },
+              inputProps: { "aria-label": t('DATATABLE.LABEL_ROWS_PER_PAGE') },
               native: true
             }}
             onChangePage={handleChangePage}
@@ -513,12 +523,12 @@ export default function EnhancedTable(props) {
                       <StyledTableCell align="left">
                         <BootstrapTooltip title="Delete">
                           <IconButton arrow aria-label="delete">
-                            <DeleteIcon fontSize="small" />
+                            <DeleteIcon color="secondary" fontSize="small" />
                           </IconButton>
                         </BootstrapTooltip>
                         <BootstrapTooltip arrow title="Edit">
                           <IconButton aria-label="Edit">
-                            <EditIcon fontSize="small" />
+                            <EditIcon color="primary" fontSize="small" />
                           </IconButton>
                         </BootstrapTooltip>
                       </StyledTableCell>
@@ -536,10 +546,7 @@ export default function EnhancedTable(props) {
           </Table>
         </TableContainer>
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+      
     </div>
   );
 }

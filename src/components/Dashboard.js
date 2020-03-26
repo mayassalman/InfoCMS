@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,86 +9,116 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-// import Add from "@material-ui/icons/Add";
-
+import SearchIcon from "@material-ui/icons/Search";
+import Home from "@material-ui/icons/Home";
+import PersonAdd from "@material-ui/icons/PersonAdd";
+import GroupAdd from "@material-ui/icons/GroupAdd";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import WbSunny from "@material-ui/icons/WbSunny";
 import AcUnit from "@material-ui/icons/AcUnit";
-import NightsStay from '@material-ui/icons/NightsStay';
-import FormatTextdirectionRToLIcon from '@material-ui/icons/FormatTextdirectionRToL';
-import FormatTextdirectionLToRIcon from '@material-ui/icons/FormatTextdirectionLToR';
-import NestedList from "./NestedList";
+import StyleIcon from "@material-ui/icons/Style";
+import ColorLensIcon from "@material-ui/icons/ColorLens";
+import NightsStay from "@material-ui/icons/NightsStay";
+import { MainList, NestedList, CustomizedMenus, TopMenu } from "./Menu";
+import { MenuListComposition } from "./TopMenu";
 import EnhancedTable from "./DataTable";
-import CustomizedInputBase from "./CustomizedInputBase";
-
+import LanguageIcon from "@material-ui/icons/Language";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
+
 import themeObject from "../themes/Theme1";
-import Orders from "./Orders";
 import { create } from "jss";
 import rtl from "jss-rtl";
 import { StylesProvider, jssPreset } from "@material-ui/core/styles";
 
 import { useTranslation } from "react-i18next";
-
-
-
-
-
+import ListItem from "@material-ui/core/ListItem";
+import  {Header1,Header2,Header3,Header4} from './Header'
+import SwipeableTextStepper from './SwipeableTextStepper'
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
-const useSetTheme = (theme) => {
+const useSetTheme = theme => {
   const [themeConfig, setTheme] = useState(theme);
 
-  
-  const setThemeConfig = (DarkMode,RTLize,themeColorIndex) => {
-  const primaryMain=["#673ab7","#ffc107","#f44336","#009688","#03a9f4","#ffeb3b"]
-  const secondaryMain=["#0044ff","#76ff03","#b28900","#f50057","#834bff","#52b202"]
+  const setThemeConfig = (DarkMode, RTLize, themeColorIndex) => {
+    const primaryMain = [
+      "#fff",
+      "#f44336",
+      "#ffc107",
+      "#03a9f4",
+      "#834bff",
+
+      "#ffeb3b"
+    ];
+    const secondaryMain = [
+      "#f44336",
+      "#76ff03",
+      "#b28900",
+      "#f50057",
+      "#834bff",
+      "#52b202"
+    ];
     const updatedTheme = {
       ...themeConfig,
       palette: {
         ...themeConfig.palette,
         type: DarkMode ? "dark" : "light",
         primary: {
-          main: primaryMain[themeColorIndex]
+          main: primaryMain[themeColorIndex],
+          // main: "#3f50b5",
+          light: "#757ce8",
+          dark: "#00ffff",
+          contrastText: "rgb(75, 78, 82)"
         },
         secondary: {
-          light: "#e91e63",
           main: secondaryMain[themeColorIndex],
-          contrastText: "#00cc00"
-        },
+          // main: "#f44336",
+
+          light: "#ff7961",
+          dark: "#ff000d",
+          contrastText: "#000"
+        }
       },
-      direction:RTLize?'rtl':'ltr',
-
-
+      direction: RTLize ? "rtl" : "ltr"
     };
     setTheme(updatedTheme);
   };
   return [themeConfig, setThemeConfig];
 };
-
-
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    
   },
+
+  palette: {
+    type: "dark",
+    background: {
+      default: "#000",
+      paper: "#fff"
+    }
+  },
+
+  h6: {
+    fontSize: "1.5rem"
+  },
+
   toolbar: {
-    paddingRight: 24
+    paddingRight: 20
   },
   toolbarIcon: {
-    // display: "flex",
-    // alignItems: "center",
-    // justifyContent: "flex-end",
-    // padding: "0 8px",
+    height: "80px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 8px",
     ...theme.mixins.toolbar
   },
   appBar: {
+    position:"fixed",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -104,7 +134,7 @@ const useStyles = makeStyles(theme => ({
     })
   },
   menuButton: {
-    marginRight: 36
+    marginRight: 16
   },
   menuButtonHidden: {
     display: "none"
@@ -123,14 +153,17 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaperClose: {
     overflowX: "hidden",
+
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9)
-    }
+    // width: theme.spacing(7),
+    // [theme.breakpoints.up("sm")]: {
+    //   width: theme.spacing(9)
+    // }
+    width: 0,
+
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -139,14 +172,18 @@ const useStyles = makeStyles(theme => ({
     // overflow: "auto"
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingTop: theme.spacing(0),
+    paddingBottom: theme.spacing(8),
+    paddingRight: theme.spacing(0),
+    paddingLeft: theme.spacing(0),
+    maxWidth:1440
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(0),
     display: "flex",
     overflow: "auto",
-    flexDirection: "column"
+    flexDirection: "column",
+    marginBottom:theme.spacing(6)
   },
   fixedHeight: {
     height: 240
@@ -154,29 +191,53 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Dashboard() {
-  
-
-
   const { t, i18n } = useTranslation();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [isRTL, setIsRTL] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [themeColorIndex,setThemeColorIndex]=useState(0)
+  const [themeColorIndex, setThemeColorIndex] = useState(0);
 
   const [themeConfig, setThemeConfig] = useSetTheme(themeObject);
-  useEffect(()=>{
-    setThemeConfig(isDarkMode,isRTL,themeColorIndex)
-    i18n.changeLanguage(isRTL?'ar':'en'); 
-  },[isDarkMode,isRTL,themeColorIndex])
+  useEffect(() => {
+    setThemeConfig(isDarkMode, isRTL, themeColorIndex);
+    i18n.changeLanguage(isRTL ? "ar" : "en");
+  }, [isDarkMode, isRTL, themeColorIndex]);
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const theme = createMuiTheme(themeConfig);
+
+  const UtilityBar = () => (
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+      className={classes.root}
+    >
+      <ListItem>
+        {/* <ListItemIcon><InboxIcon /></ListItemIcon> */}
+        <IconButton color="inherit" onClick={() => setIsDarkMode(!isDarkMode)}>
+          {isDarkMode ? <WbSunny /> : <NightsStay />}
+        </IconButton>
+        <IconButton color="inherit" onClick={() => setIsRTL(!isRTL)}>
+          <LanguageIcon />
+        </IconButton>
+
+        <IconButton
+          color="inherit"
+          onClick={() => setThemeColorIndex((themeColorIndex + 1) % 6)}
+        >
+          <ColorLensIcon />
+        </IconButton>
+      </ListItem>
+      {/* <Divider /> */}
+    </List>
+  );
+
   return (
     <StylesProvider jss={jss}>
-      <div className="app" dir={isRTL ? "rtl" : "ltr"}>
+      <div dir={isRTL ? "rtl" : "ltr"}>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <div className={classes.root}>
-            <CssBaseline />
             <AppBar
               position="absolute"
               className={clsx(classes.appBar /*, open && classes.appBarShift*/)}
@@ -198,51 +259,17 @@ export default function Dashboard() {
                   noWrap
                   className={classes.title}
                 >
-                                    {t("HOME_TITLE")}
+                  {t("HOME_TITLE")}
+
 
                 </Typography>
-                {/* <CustomizedInputBase /> */}
-                {/* <IconButton color="inherit">
-                  <Badge
-                    badgeContent={4}
-                    anchorOrigin={{ vertical: "top", horizontal: "left" }}
-                    color="error"
-                  >
-                    <Badge
-                      badgeContent={3}
-                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                      color="secondary"
-                    >
-                      <NotificationsIcon />
-                    </Badge>
-                  </Badge>
-                </IconButton> */}
-                <IconButton color="inherit" onClick={() => setIsDarkMode(!isDarkMode)}>
-                  {isDarkMode?<WbSunny />:<NightsStay/>}
-                </IconButton>
-                <IconButton color="inherit" onClick={() => setIsRTL(!isRTL)}>
-                  {isRTL?<FormatTextdirectionLToRIcon/>:<FormatTextdirectionRToLIcon />}
-                </IconButton>
-
-
-                <IconButton color="inherit" onClick={() => setThemeColorIndex((themeColorIndex+1)%6)}>
-                <AcUnit />
-                </IconButton>
-
-                {/* <IconButton color="inherit">
-                  <Badge
-                    badgeContent={3333}
-                    max="100"
-                    variant={"dot"}
-                    anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                    color="secondary"
-                  >
-                   // <AcUnit />
-                    <Add />
-                  </Badge>
-                </IconButton> */}
+                {/* <CustomizedMenus/> */}
+                {/* <TopMenu menu={topMenu}/> */}
+                <MenuListComposition menu={topMenu} />
+                <UtilityBar />
               </Toolbar>
             </AppBar>
+
             <Drawer
               variant="permanent"
               classes={{
@@ -254,26 +281,54 @@ export default function Dashboard() {
               open={open}
             >
               <div className={classes.toolbarIcon}></div>
-              <NestedList />
+
+              <MainList menu={mainMenu} />
+              <NestedList menu={nestedMenu} title={"ADD"} />
+
               <Divider />
-              <mainListItems/>
             </Drawer>
             <main className={classes.content}>
               <div className={classes.appBarSpacer} />
+
               <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={12} lg={12}>
                     <Paper className={classes.paper}>
-                      <EnhancedTable
-                        headerData={headerData}
-                        defaultRowsPerPage={10}
-                        rows={data}
-                        headCells={headCells}
-                        pagenationData={pagenationData}
-                      />
+                  <Header1 />
                     </Paper>
                   </Grid>
-                  {/* <Orders /> */}
+                  <Grid item xs={12} md={12} lg={12}>
+                    {/* <Paper className={classes.paper}> */}
+                    <SwipeableTextStepper/>
+                  {/* <Header4 /> */}
+                    {/* </Paper> */}
+                  </Grid>
+                  <Grid item xs={12} md={12} lg={12}>
+                    <Paper className={classes.paper}>
+                  <Header3 />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12} lg={12}>
+                    <Paper className={classes.paper}>
+                  {/* <Header2 /> */}
+                  {/* <SwipeableTextStepper/> */}
+
+                    </Paper>
+                  </Grid>
+                  
+                  {/* <Grid item xs={12} md={12} lg={12}>
+                    <Paper className={classes.paper}>
+                      <EnhancedTable
+                        headerData={headerData}
+                        defaultRowsPerPage={5}
+                        rows={data}
+                        headCells={headCells}
+                      />
+                    </Paper>
+                  </Grid> */}
+                  <Grid item xs={12} md={12} lg={12}>
+                    <Paper>{/* <Orders /> */}</Paper>
+                  </Grid>
                 </Grid>
               </Container>
             </main>
@@ -283,21 +338,26 @@ export default function Dashboard() {
     </StylesProvider>
   );
 }
-
-
-
-
-
-
-
-
-
 // Static Data
 
+const mainMenu = [
+  { id: 1, text: "NAV_BAR.HOME", Icon: <Home /> },
+  { id: 2, text: "NAV_BAR.SEARCH", Icon: <SearchIcon /> }
+];
+const nestedMenu = [
+  { id: 3, text: "NAV_BAR.ADD_PERSON", Icon: <PersonAdd /> },
+  { id: 4, text: "PROFILE.ADD_FRIEND", Icon: <GroupAdd /> }
+];
 
-
-
-
+const topMenu = [
+  // { id: 1, text: "TOP_MENU.HOME"},
+  { id: 2, text: "TOP_MENU.PRODUCTS" },
+  { id: 3, text: "TOP_MENU.SOLUTIONS" },
+  { id: 4, text: "TOP_MENU.SERVICES" },
+  { id: 5, text: "TOP_MENU.SUPPORT" },
+  { id: 6, text: "TOP_MENU.PARTNERS" },
+  { id: 7, text: "TOP_MENU.COMPANY" }
+];
 const headCells = [
   { id: "id", numeric: false, disablePadding: false, label: "#" },
   { id: "name", numeric: false, disablePadding: false, label: "الاسم" },
@@ -315,8 +375,6 @@ const headCells = [
 function createData(id, name, city, NatId, DoB, specialist) {
   return { id, name, city, NatId, DoB, specialist };
 }
-
-
 
 const data = [
   createData(
@@ -376,12 +434,7 @@ const data = [
     `مطور تطبيقات وب`
   )
 ];
-const pagenationData = {
-  labelRowsPerPage: "عدد السجلات في الصفحة",
-  nextIconButtonText: "التالي",
-  backIconButtonText: "السابق"
-};
+
 const headerData = {
-  selectedRecordsNumberText: "عدد السجلات المحددة",
   headerTitle: "العاملون في الشركة"
 };

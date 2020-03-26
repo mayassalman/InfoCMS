@@ -8,7 +8,7 @@ const resources = {
     translation: {
       ENGLISH: "English",
       ARABIC: "العربية",
-      HOME_TITLE: "Relationship Mapper",
+      HOME_TITLE: "Infostrtegic",
       FIRST_HOME_DESC: "Easy , Trusted",
       SECOND_HOME_DESC: "Visualize Relationships",
       NAV_BAR: {
@@ -77,7 +77,25 @@ const resources = {
       },
       ALERT:{
         SUCCESFULLY_ADDED:"Person added successfully"
-      }
+      },
+      DATATABLE: {
+        LABEL_ROWS_PER_PAGE: "Records Per Page",
+        NEXTICON_BUTTON_TEXT: "Next",
+        BABKICON_BUTTON_TEXT: "Previous",
+        FROM_TEXT:'From',
+        SELECTEDRECORDS_NUMBER_LABEL: `Selected Records`,
+
+      },
+      ADD: "Add",
+      TOP_MENU:{
+        PRODUCTS:`Products`,
+        SOLUTIONS:`Solutions`,
+        SERVICES:`Services`,
+        SUPPORT:`Support`,
+        PARTNERS:`Partners`,
+        COMPANY:`Company`,
+
+      },
 
     }
   },
@@ -85,7 +103,7 @@ const resources = {
     translation: {
       ENGLISH: "English",
       ARABIC: "العربية",
-      HOME_TITLE: "مخطط العلاقات",
+      HOME_TITLE: "إنفو ستراتيجيك",
       FIRST_HOME_DESC: "سهل , موثوق",
       SECOND_HOME_DESC: "تصميم علاقات",
       NAV_BAR: {
@@ -154,7 +172,25 @@ const resources = {
       },
       ALERT:{
         SUCCESFULLY_ADDED:"تمت إضافة الشخص بنجاح"
-      }
+      },
+      DATATABLE: {
+        LABEL_ROWS_PER_PAGE: "عدد السجلات في الصفحة",
+        NEXTICON_BUTTON_TEXT: "التالي",
+        BABKICON_BUTTON_TEXT: "السابق",
+        FROM_TEXT:'من',
+        SELECTEDRECORDS_NUMBER_LABEL: "عدد السجلات المحددة",
+      },
+      ADD: "إضافة",
+      TOP_MENU:{
+        PRODUCTS:`المنتجات`,
+        SOLUTIONS:`الحلول`,
+        SERVICES:`الخدمات`,
+        SUPPORT:`الدعم`,
+        PARTNERS:`الشركاء`,
+        COMPANY:`الشركة`,
+
+      },
+
     }
   }
 };

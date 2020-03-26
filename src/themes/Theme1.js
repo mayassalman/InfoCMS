@@ -1,6 +1,8 @@
 // import React from "react";
 import changattf from "../fonts/Changa-Regular.ttf";
-import { green, orange } from '@material-ui/core/colors';
+import tajwalttf from "../fonts/Tajawal-Regular.ttf";
+import cairottf from "../fonts/Cairo-Regular.ttf";
+import { green, orange } from "@material-ui/core/colors";
 
 const changa = {
   fontFamily: "Changa",
@@ -13,37 +15,31 @@ const changa = {
         url(${changattf}) format('truetype')
       `
 };
-let themeObject={
- 
-  palette: {
-    type: 'dark',
-    primary: {
-      main: "#ff4400"
-    },
-    secondary: {
-      light: "#e91e63",
-      main: "#0044ff",
-      contrastText: "#00cc00"
-    },
-    contrastThreshold: 3,
-    tonalOffset: 0.2
-  },
+const tajwal = {
+  fontFamily: "Tajawal",
+  fontStyle: "normal",
+  fontDisplay: "swap",
+  fontWeight: 400,
+  src: `
+        local('Tajawal'),
+        local('Tajawal-Regular'),
+        url(${tajwalttf}) format('truetype')
+      `
+};
+
+const cairo = {
+  fontFamily: "Cairo",
+  fontStyle: "normal",
+  fontDisplay: "swap",
+  fontWeight: 400,
+  src: `
+        local('Cairo'),
+        local('Cairo-Regular'),
+        url(${cairottf}) format('truetype')
+      `
+};
+let themeObject = {
   typography: {
-  
-    button: {
-      
-      background: "linear-gradient(135deg, #ff4400 5%, #0066ff 5%)",
-      // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-      color: "white"
-    },
-    
-    h6: {
-      fontSize: "2rem"
-    },
-    body2: {
-      // float:'left',
-    },
-   
     fontFamily: [
       "Changa",
       "Tajawal",
@@ -65,11 +61,11 @@ let themeObject={
   overrides: {
     MuiCssBaseline: {
       "@global": {
-        "@font-face": [changa]
+        "@font-face": [cairo]
       }
     }
   },
-  direction: "rtl"
-}
+  
+};
 
 export default themeObject;
