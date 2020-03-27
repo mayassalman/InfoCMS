@@ -7,6 +7,8 @@ import SwipeableViews from "react-swipeable-views";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
+import RecipeReviewCard from './RecipeReviewCard'
+import SwipperCard from './SwipperCard'
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -14,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: "100%",
     flexGrow: 1,
-    height: 220,
+    height: 400,
     // backgroundColor: "#0168c1"
     // backgroundColor: theme.palette.primary.main,
     // color: theme.palette.text.primary
@@ -27,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     color:"inherit",
 
 
-    height: 220,
+    height: 400,
     marginLeft: "auto",
     marginRight: "auto",
     padding: "10px 30px"
@@ -67,14 +69,15 @@ function SwipeableTextStepper() {
                   <CardContent>
                     <Grid container spacing={3}>
                       <Grid item xs={12} md={12} lg={3}>
-                        <Typography gutterTop variant="h3" component="h3">
+                         {/* <Typography gutterTop variant="h3" component="h3">
                           {step.title}
-                        </Typography>
-                        <Typography gutterTop variant="subtitle2">
+                        </Typography> */}
+                        {/* <Typography gutterTop variant="subtitle2">
                           {theme.direction === "rtl"
                             ? "  انفوستراتيجيك "
                             : "  Infostrategic"}
-                        </Typography>
+                        </Typography>  */}
+                        <SwipperCard item={{ id: "1", title: step.title, img: step.img, text: "" }}/>
                       </Grid>
                       <Grid item xs={12} md={12} lg={9}>
                         <Typography
@@ -109,7 +112,9 @@ let dataTextAr = [
         <br />
         <li>ترك بصمة هامة في مجال إدارة المعلومات على المستوى العالمي</li>
       </ul>
-    )
+    ),
+    img:'/images/cards/ourVision.jpg'
+    
   },
   {
     title: "رسالتنا",
@@ -123,7 +128,9 @@ let dataTextAr = [
           ودعمهم في تحويل بياناتهم إلى معلومات مفيدة ، وإلى أداة اتصال قوية
         </li>
       </ul>
-    )
+    ),
+    img:'/images/cards/ourMessage.png'
+
   },
   {
     title: `قيمنا`,
@@ -140,7 +147,9 @@ let dataTextAr = [
           الاحترام: نظهر التقدير لبعضنا ، ونقدر مساهمات الجميع ، ونرحب بالتنوع
         </li>
       </ul>
-    )
+    ),
+    img:'/images/cards/ourValues.jpg'
+
   }
 ];
 let dataTextEn = [

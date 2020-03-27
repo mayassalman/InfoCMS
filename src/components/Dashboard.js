@@ -32,21 +32,20 @@ import { StylesProvider, jssPreset } from "@material-ui/core/styles";
 
 import { useTranslation } from "react-i18next";
 import ListItem from "@material-ui/core/ListItem";
-import  {Header1,Header3} from './Header'
-import SwipeableTextStepper from './SwipeableTextStepper'
-import NestedGrid from './NestedGrid'
-import {mainMenu,nestedMenu,topMenu,headCells,data,headerData}from './data'
+import { Header1, Header3 } from "./Header";
+import SwipeableTextStepper from "./SwipeableTextStepper";
+import NestedGrid from "./NestedGrid";
+import {
+  mainMenu,
+  nestedMenu,
+  topMenu,
+  headCells,
+  data,
+  headerData
+} from "./data";
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
-const primaryMain = [
-  "#FFF",
-  "#FFDE03",
-  "#FF0266",
-];
-const secondaryMain = [
-  "#000",
-  "#0336FF",
-  "#791515",
-];
+const primaryMain = ["#FFDE03", "#FF0266", "#FFF"];
+const secondaryMain = ["#0336FF", "#791515", "#000"];
 
 const useSetTheme = theme => {
   const [themeConfig, setTheme] = useState(theme);
@@ -58,10 +57,10 @@ const useSetTheme = theme => {
         ...themeConfig.palette,
         type: DarkMode ? "dark" : "light",
         primary: {
-          main: primaryMain[themeColorIndex],
+          main: primaryMain[themeColorIndex]
         },
         secondary: {
-          main: secondaryMain[themeColorIndex],
+          main: secondaryMain[themeColorIndex]
         }
       },
       direction: RTLize ? "rtl" : "ltr"
@@ -73,8 +72,7 @@ const useSetTheme = theme => {
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex",
-    
+    display: "flex"
   },
 
   // palette: {
@@ -101,7 +99,7 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar
   },
   appBar: {
-    position:"fixed",
+    position: "fixed",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -145,12 +143,11 @@ const useStyles = makeStyles(theme => ({
     // [theme.breakpoints.up("sm")]: {
     //   width: theme.spacing(9)
     // }
-    width: 0,
-
+    width: 0
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
-    flexGrow: 1,
+    flexGrow: 1
     // height: "100vh"
     // overflow: "auto"
   },
@@ -159,14 +156,14 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(2),
     paddingRight: theme.spacing(0),
     paddingLeft: theme.spacing(0),
-    maxWidth:'100%'
+    maxWidth: "100%"
   },
   paper: {
     padding: theme.spacing(0),
     display: "flex",
     overflow: "auto",
     flexDirection: "column",
-    marginBottom:theme.spacing(6)
+    marginBottom: theme.spacing(6)
   },
   fixedHeight: {
     height: 240
@@ -177,7 +174,7 @@ export default function Dashboard() {
   const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const [isRTL, setIsRTL] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [themeColorIndex, setThemeColorIndex] = useState(0);
 
   const [themeConfig, setThemeConfig] = useSetTheme(themeObject);
@@ -206,7 +203,9 @@ export default function Dashboard() {
 
         <IconButton
           color="inherit"
-          onClick={() => setThemeColorIndex((themeColorIndex + 1) % primaryMain.length)}
+          onClick={() =>
+            setThemeColorIndex((themeColorIndex + 1) % primaryMain.length)
+          }
         >
           <ColorLensIcon />
         </IconButton>
@@ -243,8 +242,6 @@ export default function Dashboard() {
                   className={classes.title}
                 >
                   {t("HOME_TITLE")}
-
-
                 </Typography>
                 {/* <CustomizedMenus/> */}
                 {/* <TopMenu menu={topMenu}/> */}
@@ -276,33 +273,21 @@ export default function Dashboard() {
               <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={12} lg={12}>
-                    {/* <Paper className={classes.paper}> */}
-                  <Header1 />
-                    {/* </Paper> */}
+                    <Header1 />
                   </Grid>
                   <Grid item xs={12} md={12} lg={12}>
-                    {/* <Paper className={classes.paper}> */}
-                    <SwipeableTextStepper/>
-
-                  {/* <Header4 /> */}
-                    {/* </Paper> */}
-                  </Grid>
-                  <Grid item xs={12} md={12} lg={12}>
-                    {/* <Paper className={classes.paper}> */}
                     <NestedGrid />
-
-                    {/* </Paper> */}
                   </Grid>
                   <Grid item xs={12} md={12} lg={12}>
-                    {/* <Paper className={classes.paper}> */}
-                  {/* <Header2 /> */}
-                  {/* <SwipeableTextStepper/> */}
-
-
-                    {/* </Paper> */}
+                    <SwipeableTextStepper />
                   </Grid>
-                  
-                  {/* <Grid item xs={12} md={12} lg={12}>
+                  <Grid item xs={12} md={12} lg={12}></Grid>
+                  <Grid item xs={12} md={12} lg={12}>
+                    <Paper>
+                      <Header3 />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12} lg={12}>
                     <Paper className={classes.paper}>
                       <EnhancedTable
                         headerData={headerData}
@@ -311,20 +296,16 @@ export default function Dashboard() {
                         headCells={headCells}
                       />
                     </Paper>
-                  </Grid> */}
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Paper>{/* <Orders /> */}</Paper>
-                    <Header3 />
-                  
                   </Grid>
+                  
                 </Grid>
               </Container>
-           
-              <Container maxWidth="lg" className={classes.container}>
-               
-              
-              </Container>
-             </main>
+
+              <Container
+                maxWidth="lg"
+                className={classes.container}
+              ></Container>
+            </main>
           </div>
         </ThemeProvider>
       </div>
