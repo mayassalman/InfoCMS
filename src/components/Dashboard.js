@@ -9,10 +9,6 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import Home from "@material-ui/icons/Home";
-import PersonAdd from "@material-ui/icons/PersonAdd";
-import GroupAdd from "@material-ui/icons/GroupAdd";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -36,30 +32,26 @@ import { StylesProvider, jssPreset } from "@material-ui/core/styles";
 
 import { useTranslation } from "react-i18next";
 import ListItem from "@material-ui/core/ListItem";
-import  {Header1,Header2,Header3,Header4} from './Header'
+import  {Header1,Header3} from './Header'
 import SwipeableTextStepper from './SwipeableTextStepper'
+import NestedGrid from './NestedGrid'
+import {mainMenu,nestedMenu,topMenu,headCells,data,headerData}from './data'
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+const primaryMain = [
+  "#FFF",
+  "#FFDE03",
+  "#FF0266",
+];
+const secondaryMain = [
+  "#000",
+  "#0336FF",
+  "#791515",
+];
+
 const useSetTheme = theme => {
   const [themeConfig, setTheme] = useState(theme);
 
   const setThemeConfig = (DarkMode, RTLize, themeColorIndex) => {
-    const primaryMain = [
-      "#fff",
-      "#f44336",
-      "#ffc107",
-      "#03a9f4",
-      "#834bff",
-
-      "#ffeb3b"
-    ];
-    const secondaryMain = [
-      "#f44336",
-      "#76ff03",
-      "#b28900",
-      "#f50057",
-      "#834bff",
-      "#52b202"
-    ];
     const updatedTheme = {
       ...themeConfig,
       palette: {
@@ -67,18 +59,9 @@ const useSetTheme = theme => {
         type: DarkMode ? "dark" : "light",
         primary: {
           main: primaryMain[themeColorIndex],
-          // main: "#3f50b5",
-          light: "#757ce8",
-          dark: "#00ffff",
-          contrastText: "rgb(75, 78, 82)"
         },
         secondary: {
           main: secondaryMain[themeColorIndex],
-          // main: "#f44336",
-
-          light: "#ff7961",
-          dark: "#ff000d",
-          contrastText: "#000"
         }
       },
       direction: RTLize ? "rtl" : "ltr"
@@ -94,13 +77,13 @@ const useStyles = makeStyles(theme => ({
     
   },
 
-  palette: {
-    type: "dark",
-    background: {
-      default: "#000",
-      paper: "#fff"
-    }
-  },
+  // palette: {
+  //   type: "dark",
+  //   background: {
+  //     default: "#000",
+  //     paper: "#fff"
+  //   }
+  // },
 
   h6: {
     fontSize: "1.5rem"
@@ -168,15 +151,15 @@ const useStyles = makeStyles(theme => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: "100vh"
+    // height: "100vh"
     // overflow: "auto"
   },
   container: {
     paddingTop: theme.spacing(0),
-    paddingBottom: theme.spacing(8),
+    paddingBottom: theme.spacing(2),
     paddingRight: theme.spacing(0),
     paddingLeft: theme.spacing(0),
-    maxWidth:1440
+    maxWidth:'100%'
   },
   paper: {
     padding: theme.spacing(0),
@@ -223,7 +206,7 @@ export default function Dashboard() {
 
         <IconButton
           color="inherit"
-          onClick={() => setThemeColorIndex((themeColorIndex + 1) % 6)}
+          onClick={() => setThemeColorIndex((themeColorIndex + 1) % primaryMain.length)}
         >
           <ColorLensIcon />
         </IconButton>
@@ -293,27 +276,30 @@ export default function Dashboard() {
               <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={12} lg={12}>
-                    <Paper className={classes.paper}>
+                    {/* <Paper className={classes.paper}> */}
                   <Header1 />
-                    </Paper>
+                    {/* </Paper> */}
                   </Grid>
                   <Grid item xs={12} md={12} lg={12}>
                     {/* <Paper className={classes.paper}> */}
                     <SwipeableTextStepper/>
+
                   {/* <Header4 /> */}
                     {/* </Paper> */}
                   </Grid>
                   <Grid item xs={12} md={12} lg={12}>
-                    <Paper className={classes.paper}>
-                  <Header3 />
-                    </Paper>
+                    {/* <Paper className={classes.paper}> */}
+                    <NestedGrid />
+
+                    {/* </Paper> */}
                   </Grid>
                   <Grid item xs={12} md={12} lg={12}>
-                    <Paper className={classes.paper}>
+                    {/* <Paper className={classes.paper}> */}
                   {/* <Header2 /> */}
                   {/* <SwipeableTextStepper/> */}
 
-                    </Paper>
+
+                    {/* </Paper> */}
                   </Grid>
                   
                   {/* <Grid item xs={12} md={12} lg={12}>
@@ -328,113 +314,20 @@ export default function Dashboard() {
                   </Grid> */}
                   <Grid item xs={12} md={12} lg={12}>
                     <Paper>{/* <Orders /> */}</Paper>
+                    <Header3 />
+                  
                   </Grid>
                 </Grid>
               </Container>
-            </main>
+           
+              <Container maxWidth="lg" className={classes.container}>
+               
+              
+              </Container>
+             </main>
           </div>
         </ThemeProvider>
       </div>
     </StylesProvider>
   );
 }
-// Static Data
-
-const mainMenu = [
-  { id: 1, text: "NAV_BAR.HOME", Icon: <Home /> },
-  { id: 2, text: "NAV_BAR.SEARCH", Icon: <SearchIcon /> }
-];
-const nestedMenu = [
-  { id: 3, text: "NAV_BAR.ADD_PERSON", Icon: <PersonAdd /> },
-  { id: 4, text: "PROFILE.ADD_FRIEND", Icon: <GroupAdd /> }
-];
-
-const topMenu = [
-  // { id: 1, text: "TOP_MENU.HOME"},
-  { id: 2, text: "TOP_MENU.PRODUCTS" },
-  { id: 3, text: "TOP_MENU.SOLUTIONS" },
-  { id: 4, text: "TOP_MENU.SERVICES" },
-  { id: 5, text: "TOP_MENU.SUPPORT" },
-  { id: 6, text: "TOP_MENU.PARTNERS" },
-  { id: 7, text: "TOP_MENU.COMPANY" }
-];
-const headCells = [
-  { id: "id", numeric: false, disablePadding: false, label: "#" },
-  { id: "name", numeric: false, disablePadding: false, label: "الاسم" },
-  { id: "city", numeric: false, disablePadding: false, label: "المدينة" },
-  { id: "NatId", numeric: false, disablePadding: false, label: "الرقم الوطني" },
-  { id: "DoB", numeric: false, disablePadding: false, label: "تاريخ الميلاد" },
-  {
-    id: "specialist",
-    numeric: false,
-    disablePadding: false,
-    label: "الاختصاص"
-  },
-  { id: "Actions", numeric: false, disablePadding: false, label: "" }
-];
-function createData(id, name, city, NatId, DoB, specialist) {
-  return { id, name, city, NatId, DoB, specialist };
-}
-
-const data = [
-  createData(
-    1,
-    "مياس  تمين سلمان",
-    `طرطوس`,
-    1026010903,
-    `23/02/1982`,
-    `مطور تطبيقات وب`
-  ),
-  createData(
-    2,
-    "مياس سلمان",
-    `طرطوس`,
-    1026010903,
-    `23/02/1982`,
-    `مطور تطبيقات وب`
-  ),
-  createData(
-    3,
-    "مياس سلمان",
-    `طرطوس`,
-    1026010903,
-    `23/02/1982`,
-    `مطور تطبيقات وب`
-  ),
-  createData(
-    4,
-    "مياس سلمان",
-    `طرطوس`,
-    1026010903,
-    `23/02/1982`,
-    `مطور تطبيقات وب`
-  ),
-  createData(
-    5,
-    "مياس سلمان",
-    `طرطوس`,
-    1026010903,
-    `23/02/1982`,
-    `مطور تطبيقات وب`
-  ),
-  createData(
-    6,
-    "مياس سلمان",
-    `طرطوس`,
-    1026010903,
-    `23/02/1982`,
-    `مطور تطبيقات وب`
-  ),
-  createData(
-    7,
-    "مياس سلمان",
-    `طرطوس`,
-    1026010903,
-    `23/02/1982`,
-    `مطور تطبيقات وب`
-  )
-];
-
-const headerData = {
-  headerTitle: "العاملون في الشركة"
-};

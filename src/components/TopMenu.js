@@ -23,6 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
   link:{
     padding: theme.spacing(1),
+    fontSize:'1.2em',
+    fontWeight:"bolder"
   }
 }));
 

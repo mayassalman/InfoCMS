@@ -116,12 +116,7 @@ export function Header1() {
 
   return !(theme.direction === 'rtl') ?  (
     <Card className={classes.root1en}>
-      <CardActionArea>
-        {/* <CardMedia
-          className={classes.media}
-          image="/images/cards/card.jpg"
-          title="Contemplative Reptile"
-        /> */}
+     
         <CardContent>
           <Typography gutterTop variant="h4" component="h4">
             Infostrategic
@@ -135,7 +130,6 @@ export function Header1() {
             <br />
           </Typography>
         </CardContent>
-      </CardActionArea>
       <CardActions>
         <Button className={classes.button1}>Talk To An Expert</Button>
         <Button
